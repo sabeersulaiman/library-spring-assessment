@@ -2,6 +2,8 @@ package com.ssabeer.libraryspring.controllers;
 
 import com.ssabeer.libraryspring.exceptions.LocationAlreadyTakenException;
 import com.ssabeer.libraryspring.models.Book;
+import com.ssabeer.libraryspring.models.BookIssue;
+import com.ssabeer.libraryspring.services.BookIssueService;
 import com.ssabeer.libraryspring.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -15,10 +17,12 @@ import java.util.List;
 @RequestMapping("v1/books")
 public class BookController {
     private final BookService bookService;
+    private final BookIssueService bookIssueService;
 
     @Autowired
-    public BookController(BookService bookService) {
+    public BookController(BookService bookService, BookIssueService bookIssueService) {
         this.bookService = bookService;
+        this.bookIssueService = bookIssueService;
     }
 
     @GetMapping
@@ -61,5 +65,20 @@ public class BookController {
                 throw e;
             }
         }
+    }
+
+    @PostMapping("issue")
+    public BookIssue createBookIssue(@RequestBody @Valid BookIssue issue) {
+        return bookIssueService.createBookIssue(issue);
+    }
+
+    @PutMapping("issue")
+    public BookIssue returnBook(@RequestBody @Valid BookIssue issue) {
+        return bookIssueService.returnBook(issue);
+    }
+
+    @GetMapping("{id}/issue-history")
+    public List<BookIssue> getAllBookIssues(@PathVariable(name = "id") int bookId) {
+        return bookIssueService.getAllIssues(bookId);
     }
 }

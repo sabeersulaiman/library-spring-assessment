@@ -4,8 +4,8 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(value = HttpStatus.NOT_FOUND)
-public class ResourceNotFoundException extends RuntimeException {
+@ResponseStatus(HttpStatus.BAD_REQUEST)
+public class BadRequestException extends RuntimeException {
     @Getter
     private String resourceName;
     @Getter
@@ -13,8 +13,8 @@ public class ResourceNotFoundException extends RuntimeException {
     @Getter
     private Object fieldValue;
 
-    public ResourceNotFoundException( String resourceName, String fieldName, Object fieldValue) {
-        super(String.format("%s not found with %s : '%s'", resourceName, fieldName, fieldValue));
+    public BadRequestException( String resourceName, String fieldName, Object fieldValue) {
+        super(String.format("%s cannot take value %s for property '%s'", resourceName, fieldValue, fieldName));
         this.resourceName = resourceName;
         this.fieldName = fieldName;
         this.fieldValue = fieldValue;

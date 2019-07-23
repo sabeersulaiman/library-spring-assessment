@@ -1,5 +1,6 @@
 package com.ssabeer.libraryspring.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ssabeer.libraryspring.models.enums.BookStatus;
 import lombok.Data;
@@ -7,6 +8,7 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Data
 @EqualsAndHashCode(of = "bookId", callSuper = false)
@@ -50,4 +52,8 @@ public class Book extends AuditModel {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private BookStatus status;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
+    @JsonIgnore
+    private List<BookIssue> bookIssues;
 }
