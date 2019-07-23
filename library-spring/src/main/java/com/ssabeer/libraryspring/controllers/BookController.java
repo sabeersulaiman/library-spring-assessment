@@ -31,9 +31,9 @@ public class BookController {
 
         // if any of the search params is just whitespace, we set it to null,
         // so that they could be removed from the search
-        if(name.isBlank()) name = null;
-        if(author.isBlank()) author = null;
-        if(isbn.isBlank()) isbn = null;
+        if(name != null && name.isBlank()) name = null;
+        if(author != null && author.isBlank()) author = null;
+        if(isbn != null && isbn.isBlank()) isbn = null;
 
         return bookService.loadBooks(name, author, isbn, page, count);
     }
