@@ -11,7 +11,9 @@ import javax.validation.constraints.NotBlank;
 @Data
 @EqualsAndHashCode(of = "bookId", callSuper = false)
 @Entity
-@Table(name = "books")
+@Table(name = "books", uniqueConstraints =
+    @UniqueConstraint(columnNames = {"shelf_location", "row_location", "column_location"})
+)
 @JsonIgnoreProperties(value = {"dateAdded", "dateModified", "deleted"},
         allowGetters = true)
 public class Book extends AuditModel {

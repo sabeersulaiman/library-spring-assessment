@@ -1,10 +1,13 @@
 package com.ssabeer.libraryspring.controllers;
 
+import com.ssabeer.libraryspring.exceptions.LocationAlreadyTakenException;
 import com.ssabeer.libraryspring.models.Book;
 import com.ssabeer.libraryspring.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -46,6 +49,17 @@ public class BookController {
     @PutMapping("{id}/location")
     public Book updateBookLocation(@PathVariable(name = "id") int bookId,
                                    @RequestBody @Valid Book book) {
-        return bookService.updateLocation(bookId, book);
+        try {
+            return bookService.updateLocation(bookId, book);
+        }
+        catch (DataIntegrityViolationException e) {
+            if(e.getCause() != null && e.getCause() instanceof ConstraintViolationException
+            ) {
+                throw new LocationAlreadyTakenException();
+            }
+            else {
+                throw e;
+            }
+        }
     }
 }
