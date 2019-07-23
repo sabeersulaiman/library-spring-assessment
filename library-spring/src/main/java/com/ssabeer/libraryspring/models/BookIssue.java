@@ -31,7 +31,7 @@ public class BookIssue extends AuditModel {
     @Temporal(TemporalType.TIMESTAMP)
     private Date issuedTo;
 
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
     @JoinColumn(name = "bookId")
     private Book book;
 

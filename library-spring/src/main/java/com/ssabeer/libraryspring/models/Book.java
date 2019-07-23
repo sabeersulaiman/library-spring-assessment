@@ -55,5 +55,6 @@ public class Book extends AuditModel {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
     @JsonIgnore
+    @OrderBy(value = "dateAdded DESC")
     private List<BookIssue> bookIssues;
 }

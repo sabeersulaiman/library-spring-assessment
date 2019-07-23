@@ -48,10 +48,11 @@ public class BookIssueServiceImpl implements BookIssueService {
         if(issue.getIssuedFrom().after(issue.getIssuedTo())) {
             throw new BadRequestException("BookIssue", "issuedFrom", "(invalid) From should be less than to");
         }
+        bookRepository.save(book);
 
+        issue.setBook(book);
         issue.setIssueStatus(BookIssueStatus.CIRCULATED);
 
-        bookRepository.save(book);
         return bookIssueRepository.save(issue);
     }
 
@@ -79,9 +80,11 @@ public class BookIssueServiceImpl implements BookIssueService {
         }
 
         book.setStatus(BookStatus.AVAILABLE);
-        issue.setIssueStatus(BookIssueStatus.RETURNED);
+        issue.setBook(book);
 
         bookRepository.save(book);
+
+        issue.setIssueStatus(BookIssueStatus.RETURNED);
         return bookIssueRepository.save(issue);
     }
 }
