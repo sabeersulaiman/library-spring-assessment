@@ -27,7 +27,8 @@ public class LibraryApplication {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**").allowedOrigins(corsUrls);
+				registry.addMapping("/**").allowedOrigins(corsUrls)
+						.allowedMethods("OPTIONS", "GET", "POST", "PUT");
 			}
 		};
 	}

@@ -10,6 +10,7 @@ import { BookListComponent } from './components/book-list/book-list.component';
 import { BookSearchComponent } from './components/book-search/book-search.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { BookViewComponent } from './components/book-view/book-view.component';
 
 @NgModule({
     declarations: [
@@ -18,7 +19,8 @@ import { FormsModule } from '@angular/forms';
         ContainerComponent,
         AlertComponent,
         BookListComponent,
-        BookSearchComponent
+        BookSearchComponent,
+        BookViewComponent
     ],
     imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
     providers: [],

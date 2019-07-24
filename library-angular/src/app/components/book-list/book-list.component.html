@@ -1,6 +1,10 @@
 <app-book-search></app-book-search>
 <div class="bookl">
-    <div *ngFor="let b of bookList" class="book">
+    <div
+        [routerLink]="['book', b.bookId]"
+        *ngFor="let b of bookList"
+        class="book"
+    >
         <img [src]="b.bookImage" />
         <div class="textual">
             <p class="isbn">{{ b.isbn }}</p>
@@ -12,3 +16,4 @@
 <div *ngIf="!listEnded" (click)="viewMore()" class="more">
     <p>View More</p>
 </div>
+<router-outlet></router-outlet>

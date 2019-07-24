@@ -18,5 +18,12 @@ export interface BookIssue {
     personName: string;
     issuedFrom: Date;
     issuedTo: Date;
+    issueStatus?: string;
     book: Book;
 }
+
+export const BookStatus = {
+    AVAILABLE: 'AVAILABLE',
+    MAINTANANCE: 'MAINTANANCE',
+    ISSUED: 'ISSUED'
+};

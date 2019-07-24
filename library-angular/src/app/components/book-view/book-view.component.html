@@ -1,0 +1,161 @@
+<div class="book-wrapper">
+    <div *ngIf="selectedBook && !loading" class="book-box">
+        <div [routerLink]="['/']" class="closer">
+            <i class="material-icons">arrow_back</i>
+            <p>Back</p>
+        </div>
+        <div class="book-detail">
+            <div class="picture">
+                <img [src]="selectedBook.bookImage" />
+            </div>
+            <div class="detail">
+                <div class="text">
+                    <p class="isbn">{{ selectedBook.isbn }}</p>
+                    <h1 class="name">{{ selectedBook.name }}</h1>
+                    <p class="author">By {{ selectedBook.author }}</p>
+
+                    <ng-container [ngSwitch]="selectedBook.status">
+                        <div
+                            *ngSwitchCase="bookStatus.AVAILABLE"
+                            class="status good"
+                        >
+                            Available for issuing
+                        </div>
+                        <div
+                            *ngSwitchCase="bookStatus.ISSUED"
+                            class="status bad"
+                        >
+                            Unavailable for issuing
+                        </div>
+                        <div *ngSwitchDefault class="status bad">
+                            Under Maintanance
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="book-now">
+                    <div class="info">
+                        <div
+                            *ngIf="
+                                selectedBook.shelfLocation !== null;
+                                else noLoc
+                            "
+                            class="shelf-info"
+                        >
+                            <div class="loc">
+                                <span class="head">Shelf</span>
+                                <span class="val">{{
+                                    selectedBook.shelfLocation
+                                }}</span>
+                            </div>
+                            <div class="loc">
+                                <span class="head">Row</span>
+                                <span class="val">{{
+                                    selectedBook.rowLocation
+                                }}</span>
+                            </div>
+                            <div class="loc">
+                                <span class="head">Column</span>
+                                <span class="val">{{
+                                    selectedBook.columnLocation
+                                }}</span>
+                            </div>
+                        </div>
+                        <ng-template #noLoc>
+                            <p class="no-loc">
+                                No location assigned for this book yet.
+                            </p>
+                        </ng-template>
+                    </div>
+                    <div class="actioner">
+                        <button
+                            (click)="issueVisible = true"
+                            type="button"
+                            [disabled]="
+                                selectedBook.status !== bookStatus.AVAILABLE
+                            "
+                            class="issue-now"
+                        >
+                            Issue this book
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="book-desc">
+            <p>
+                {{ selectedBook.bookDescription }} Contrary to popular belief,
+                Lorem Ipsum is not simply random text. It has roots in a piece
+                of classical Latin literature from 45 BC, making it over 2000
+                years old. Richard McClintock, a Latin professor at
+                Hampden-Sydney College in Virginia, looked up one of the more
+                obscure Latin words, consectetur, from a Lorem Ipsum passage,
+                and going through the cites of the word in classical literature,
+                discovered the undoubtable source. Lorem Ipsum comes from
+                sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum"
+                (The Extremes of Good and Evil) by Cicero, written in 45 BC.
+                This book is a treatise on the theory of ethics, very popular
+                during the Renaissance. The first line of Lorem Ipsum, "Lorem
+                ipsum dolor sit amet..", comes from a line in section 1.10.32.
+            </p>
+        </div>
+        <div class="issue-history">
+            <button
+                (click)="loadIssueList()"
+                *ngIf="!issueList && !issueListLoading"
+                class="action"
+                type="button"
+            >
+                View all book issues
+            </button>
+            <table *ngIf="issueList">
+                <thead>
+                    <td>Issuer</td>
+                    <td>From</td>
+                    <td>Until</td>
+                    <td>Actions</td>
+                </thead>
+                <tr *ngFor="let issue of issueList">
+                    <td>{{ issue.personName }}</td>
+                    <td>{{ issue.issuedFrom | date: 'mediumDate' }}</td>
+                    <td>{{ issue.issuedTo | date: 'mediumDate' }}</td>
+                    <td *ngIf="issue.issueStatus === 'CIRCULATED'; else noAction">
+                        <button (click)="returnBook(issue)" class="return">
+                            Return book
+                        </button>
+                    </td>
+                </tr>
+                <ng-template #noAction>
+                    <td>-</td>
+                </ng-template>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="issueVisible" class="issue-wrapper">
+    <div class="issue-box">
+        <p class="explain">
+            Here we are not getting the issue from and to dates from the user
+            for simplifying the implementation and avoiding adding a datepicker
+            plugin. In a real-world scenario this would be required.
+        </p>
+        <input type="text" [(ngModel)]="personName" placeholder="Full name" />
+        <button
+            *ngIf="!issueLoading; else loading"
+            (click)="issueBook()"
+            class="issue-now smaller"
+        >
+            Confirm and issue book
+        </button>
+        <div (click)="issueVisible = false" class="closer">
+            <i class="material-icons">arrow_back</i>
+            <p>Cancel</p>
+        </div>
+    </div>
+</div>
+
+<ng-template>
+    <div class="loading">
+        <img src="../../../assets/rolling.svg" />
+    </div>
+</ng-template>
