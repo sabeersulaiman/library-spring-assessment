@@ -1,0 +1,8 @@
+<div *ngIf="visible && message !== null" class="alert">
+    <div class="content">
+        <p>{{ message }}</p>
+    </div>
+    <div (click)="hide()" class="closer">
+        <i class="material-icons">close</i>
+    </div>
+</div>
