@@ -1,0 +1,60 @@
+.bookl {
+    margin-top: 120px;
+    padding: 20px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
+    .book {
+        width: 250px;
+        padding: 20px;
+        cursor: pointer;
+        img {
+            width: 200px;
+            margin: 0 auto;
+            display: block;
+        }
+        .textual {
+            padding: 8px;
+        }
+        p.isbn,
+        p.name,
+        p.author {
+            margin: 0;
+        }
+        p.isbn {
+            font-weight: 300;
+            font-size: 0.8em;
+            color: #878787;
+        }
+        p.name {
+            font-weight: 700;
+        }
+        p.author {
+            font-size: .7em;
+        }
+        &:hover {
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.17);
+        }
+    }
+}
+
+.more {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    padding: 12px;
+    margin: 12px 20px;
+    cursor: pointer;
+    &:hover {
+        background: #eee;
+        p {
+            text-decoration: underline;
+        }
+    }
+    p {
+        font-size: .9em;
+        margin: 0;
+    }
+}

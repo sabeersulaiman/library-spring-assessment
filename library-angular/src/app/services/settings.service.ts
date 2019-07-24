@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -7,7 +8,7 @@ export class SettingsService {
     private baseUrl: string;
 
     constructor() {
-        this.baseUrl = 'http://localhost:8080/';
+        this.baseUrl = environment.baseUrl;
     }
 
     getBaseUrl(): string {

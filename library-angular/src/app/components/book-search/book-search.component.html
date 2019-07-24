@@ -1,0 +1,25 @@
+<div class="search">
+    <div class="opener">
+        <h2>Welcome to Book World !</h2>
+    </div>
+
+    <div class="searcher">
+        <div class="chooser">
+            <select
+                [ngModel]="searchOption"
+                (ngModelChange)="searchOption = $event; onOptionChange()"
+            >
+                <option *ngFor="let s of searchOptions" [value]="s.value">{{
+                    s.title
+                }}</option>
+            </select>
+        </div>
+        <div class="typer">
+            <input
+                #search
+                type="text"
+                (input)="searchKeyWord$.next($event.target.value)"
+            />
+        </div>
+    </div>
+</div>

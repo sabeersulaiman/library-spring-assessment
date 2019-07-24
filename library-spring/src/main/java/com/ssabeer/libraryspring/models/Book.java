@@ -35,7 +35,7 @@ public class Book extends AuditModel {
     private String bookDescription;
 
     @Column(name = "author", nullable = false)
-    private String Author;
+    private String author;
 
     @Column(name = "isbn", nullable = false)
     private String isbn;

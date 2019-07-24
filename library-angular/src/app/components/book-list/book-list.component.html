@@ -1,2 +1,14 @@
-<h1>Search</h1>
-<h2>List</h2>
+<app-book-search></app-book-search>
+<div class="bookl">
+    <div *ngFor="let b of bookList" class="book">
+        <img [src]="b.bookImage" />
+        <div class="textual">
+            <p class="isbn">{{ b.isbn }}</p>
+            <p class="name">{{ b.name }}</p>
+            <p class="author">{{ b.author }}</p>
+        </div>
+    </div>
+</div>
+<div *ngIf="!listEnded" (click)="viewMore()" class="more">
+    <p>View More</p>
+</div>
