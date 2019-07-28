@@ -4,6 +4,9 @@ This is a simple library web project created as part of an assessment. Project u
 - Spring Boot v2.1.6 (Back-end)
 - Angular v8.1.1 (Front-end)
 
+## Running using docker
+If your system have docker and docker-compose installed and setup. Please use the command `docker-compose up` to build and run the application. No extra setup required.
+
 ## Building the application
 The application is in two parts: Angular and Spring.
 
