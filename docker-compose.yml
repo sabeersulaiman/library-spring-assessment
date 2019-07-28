@@ -1,8 +1,38 @@
-version: '2.1'
+version: "3"
 
 services:
-  cnb:
-    image: cnb
-    build: .
+  librarymysql:
+    image: mysql:5.6
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: sabeer
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: librarySpringTest
+    volumes:
+      - libraryData:/var/lib/mysql
+
+  library-spring:
+    image: library-spring
+    restart: always
+    build:
+      context: ./library-spring
+      dockerfile: Dockerfile
     ports:
-      - 3000:3000
+      - 8080:8080
+    depends_on:
+      - librarymysql
+
+  library-angular:
+    build:
+      context: ./library-angular
+      dockerfile: Dockerfile
+    ports:
+      - 4200:80
+    depends_on:
+      - library-spring
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+
+volumes:
+  libraryData:
